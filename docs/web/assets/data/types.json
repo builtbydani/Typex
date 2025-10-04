@@ -1,0 +1,20 @@
+[
+  {"id": "normal", "name": "Normal", "emoji": "⚪", "color": "#A8A878"},
+  {"id": "fire", "name": "Fire", "emoji": "🔥", "color": "#F08030"},
+  {"id": "water", "name": "Water", "emoji": "💧", "color": "#6890F0"},
+  {"id": "electric", "name": "Electric", "emoji": "⚡", "color": "#F8D030"},
+  {"id": "grass", "name": "Grass", "emoji": "🌿", "color": "#78C850"},
+  {"id": "ice", "name": "Ice", "emoji": "❄️", "color": "#98D8D8"},
+  {"id": "fighting", "name": "Fighting", "emoji": "🥊", "color": "#C03028"},
+  {"id": "poison", "name": "Poison", "emoji": "☠️", "color": "#A040A0"},
+  {"id": "ground", "name": "Ground", "emoji": "⛰️", "color": "#E0C068"},
+  {"id": "flying", "name": "Flying", "emoji": "🦅", "color": "#A890F0"},
+  {"id": "psychic", "name": "Psychic", "emoji": "🔮", "color": "#F85888"},
+  {"id": "bug", "name": "Bug", "emoji": "🐛", "color": "#A8B820"},
+  {"id": "rock", "name": "Rock", "emoji": "🪨", "color": "#B8A038"},
+  {"id": "ghost", "name": "Ghost", "emoji": "👻", "color": "#705898"},
+  {"id": "dragon", "name": "Dragon", "emoji": "🐉", "color": "#7038F8"},
+  {"id": "dark", "name": "Dark", "emoji": "🌑", "color": "#705848"},
+  {"id": "steel", "name": "Steel", "emoji": "⚙️", "color": "#B8B8D0"},
+  {"id": "fairy", "name": "Fairy", "emoji": "🧚", "color": "#EE99AC"}
+]

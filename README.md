@@ -1,6 +1,8 @@
 # typeX
 A companion app for Pokémon type matchups.
 
+DISCLAIMER: THIS PRODUCT HAS NO AFFILIATION WITH NINTENDO OR THE POKEMON COMPANY
+
 Built with Flutter, written in Dart.
 
 Try it out! live @ https://builtbydani.github.io/Typex/

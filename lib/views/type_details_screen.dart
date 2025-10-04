@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../viewmodels/type_chart_viewmodel.dart';
-import '../viewmodels/favorites_viewmodel.dart';
-import '../core/models/favorite_combo.dart';
 
 class TypeDetailsScreen extends StatelessWidget {
   final List<String> defenderIds;
@@ -15,21 +13,6 @@ class TypeDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Type Details'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.favorite_border),
-            onPressed: () {
-              context.read<FavoritesViewModel>().addFavorite(
-                FavoriteCombo(
-                  defenderIds: defenderIds,
-                ),
-              );
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Added to favorites')),
-              );
-            },
-          ),
-        ],
       ),
       body: Consumer<TypeChartViewModel>(
         builder: (context, viewModel, child) {

@@ -4,8 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../viewmodels/type_chart_viewmodel.dart';
 import '../widgets/type_card.dart';
 import 'type_details_screen.dart';
-import 'favorites_screen.dart';
 import 'settings_screen.dart';
+import 'team_builder_screen.dart';
+import 'type_coverage_screen.dart';
 
 class TypeChartScreen extends StatelessWidget {
   const TypeChartScreen({super.key});
@@ -23,17 +24,6 @@ class TypeChartScreen extends StatelessWidget {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.favorite),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const FavoritesScreen(),
-                ),
-              );
-            },
-          ),
-          IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
               Navigator.push(
@@ -43,6 +33,82 @@ class TypeChartScreen extends StatelessWidget {
             },
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(Icons.grid_view, size: 48, color: Colors.white),
+                  SizedBox(height: 12),
+                  Text(
+                    'Pokémon Type Chart',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.grid_view),
+              title: const Text('Type Chart'),
+              selected: true,
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.group),
+              title: const Text('Team Builder'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const TeamBuilderScreen(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.analytics),
+              title: const Text('Type Coverage'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const TypeCoverageScreen(),
+                  ),
+                );
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Settings'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SettingsScreen(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
       body: Consumer<TypeChartViewModel>(
         builder: (context, viewModel, child) {
@@ -133,6 +199,38 @@ class TypeChartScreen extends StatelessWidget {
             ],
           );
         },
+      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            heroTag: 'team_builder',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const TeamBuilderScreen(),
+                ),
+              );
+            },
+            tooltip: 'Team Builder',
+            child: const Icon(Icons.group),
+          ),
+          const SizedBox(height: 12),
+          FloatingActionButton(
+            heroTag: 'type_coverage',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const TypeCoverageScreen(),
+                ),
+              );
+            },
+            tooltip: 'Type Coverage',
+            child: const Icon(Icons.analytics),
+          ),
+        ],
       ),
     );
   }

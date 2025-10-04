@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'type_chart_screen.dart';
-import 'favorites_screen.dart';
 import 'settings_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -12,17 +11,6 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Pokémon Type Chart'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.favorite),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const FavoritesScreen(),
-                ),
-              );
-            },
-          ),
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {

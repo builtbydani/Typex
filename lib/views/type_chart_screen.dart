@@ -15,7 +15,7 @@ class TypeChartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pokémon Type Chart'),
+        title: const Text('TypeX'),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
@@ -49,7 +49,7 @@ class TypeChartScreen extends StatelessWidget {
                   Icon(Icons.grid_view, size: 48, color: Colors.white),
                   SizedBox(height: 12),
                   Text(
-                    'Pokémon Type Chart',
+                    'TypeX',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -120,7 +120,10 @@ class TypeChartScreen extends StatelessWidget {
             children: [
               // Instructions banner
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
                 color: Theme.of(context).colorScheme.primaryContainer,
                 child: Row(
                   children: [
@@ -135,7 +138,9 @@ class TypeChartScreen extends StatelessWidget {
                         'Tap to select attacker • Long press to select defender(s)',
                         style: TextStyle(
                           fontSize: 12,
-                          color: Theme.of(context).colorScheme.onPrimaryContainer,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onPrimaryContainer,
                         ),
                       ),
                     ),
@@ -170,10 +175,10 @@ class TypeChartScreen extends StatelessWidget {
                       itemCount: viewModel.types.length,
                       itemBuilder: (context, index) {
                         final type = viewModel.types[index];
-                        final isAttacker = viewModel.selectedAttackerId == type.id;
-                        final isDefender = viewModel.selectedDefenderIds.contains(
-                          type.id,
-                        );
+                        final isAttacker =
+                            viewModel.selectedAttackerId == type.id;
+                        final isDefender = viewModel.selectedDefenderIds
+                            .contains(type.id);
 
                         return TypeCard(
                           type: type,

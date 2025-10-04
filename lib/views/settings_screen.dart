@@ -48,7 +48,7 @@ class SettingsScreen extends StatelessWidget {
                 onTap: () {
                   showAboutDialog(
                     context: context,
-                    applicationName: 'Pokémon Type Chart',
+                    applicationName: 'TypeX: Type Effectiveness Companion',
                     applicationVersion: '1.0.0',
                     applicationLegalese: '© 2025 Dani',
                   );

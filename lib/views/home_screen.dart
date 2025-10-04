@@ -9,7 +9,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pokémon Type Chart'),
+        title: const Text('TypeX'),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),

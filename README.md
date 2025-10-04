@@ -6,7 +6,7 @@ Built with Flutter, written in Dart.
 [![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev/)
 [![Neovim](https://img.shields.io/badge/NeoVim-57A143?style=for-the-badge&logo=neovim&logoColor=white)](https://neovim.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](#license)
-[![Claude](https://img.shields.io/badge/Claude-D97757?style=for-the-badge)](https://claude.ai/) - AI assistant used for ideation/code help
+[![Claude](https://img.shields.io/badge/Claude-D97757?style=for-the-badge)](https://claude.ai/)
 
 
 ## Overview

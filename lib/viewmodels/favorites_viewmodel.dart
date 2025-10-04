@@ -41,9 +41,9 @@ class FavoritesViewModel extends ChangeNotifier {
 
   Future<void> removeFavorite(int index) async {
     // remove from list and save, check bounds
-    if (index < 0 || index >= favorites.length)
+    if (index < 0 || index >= favorites.length) {
       return;
-    else {
+    } else {
       favorites.removeAt(index);
       await _persistenceService.saveFavorites(favorites);
     }

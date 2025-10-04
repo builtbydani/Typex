@@ -16,7 +16,7 @@ class TypeChartScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
-              // TODO: Implement search
+              _showSearchDialog(context);
             },
           ),
         ],
@@ -216,5 +216,41 @@ class TypeChartScreen extends StatelessWidget {
     if (multiplier == 1.0) return Colors.blue;
     if (multiplier > 0.5) return Colors.orange;
     return Colors.red;
+  }
+
+  void _showSearchDialog(BuildContext context) {
+    final viewModel = context.read<TypeChartViewModel>();
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Search Type'),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: viewModel.types.length,
+              itemBuilder: (context, index) {
+                final type = viewModel.types[index];
+                return ListTile(
+                  leading: Text(type.emoji, style: const TextStyle(fontSize: 24)),
+                  title: Text(type.name),
+                  onTap: () {
+                    viewModel.selectAttacker(type.id);
+                    Navigator.of(context).pop();
+                  },
+                );
+              },
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

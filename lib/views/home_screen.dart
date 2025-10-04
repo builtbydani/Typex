@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../viewmodels/type_chart_viewmodel.dart';
-import '../widgets/type_card.dart';
 import 'type_chart_screen.dart';
 import 'favorites_screen.dart';
 import 'settings_screen.dart';

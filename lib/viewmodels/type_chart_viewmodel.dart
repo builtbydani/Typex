@@ -60,7 +60,6 @@ class TypeChartViewModel extends ChangeNotifier {
   }
 
   Map<String, double> getDefensiveMultipliers(List<String> defenderIds) {
-    // TODO: Calculate all attacking types vs these defenders
     final result = <String, double>{};
     if (matrix == null) return result;
 

@@ -19,7 +19,6 @@ class TypeDetailsScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.favorite_border),
             onPressed: () {
-              // TODO: Implement add to favorites
               final viewModel = context.read<TypeChartViewModel>();
               if (viewModel.selectedAttackerId != null) {
                 context.read<FavoritesViewModel>().addFavorite(

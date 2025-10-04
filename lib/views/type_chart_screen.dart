@@ -1,22 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../viewmodels/type_chart_viewmodel.dart';
 import '../widgets/type_card.dart';
 import 'type_details_screen.dart';
+import 'favorites_screen.dart';
+import 'settings_screen.dart';
 
 class TypeChartScreen extends StatelessWidget {
-  const TypeChartScreen({Key? key}) : super(key: key);
+  const TypeChartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Type Chart'),
+        title: const Text('Pokémon Type Chart'),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
               _showSearchDialog(context);
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.favorite),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const FavoritesScreen(),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsScreen()),
+              );
             },
           ),
         ],
@@ -29,34 +52,76 @@ class TypeChartScreen extends StatelessWidget {
 
           return Column(
             children: [
+              // Instructions banner
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                color: Theme.of(context).colorScheme.primaryContainer,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.info_outline,
+                      size: 16,
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Tap to select attacker • Long press to select defender(s)',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Expanded(
-                child: GridView.builder(
-                  padding: const EdgeInsets.all(16),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                    childAspectRatio: 1.0,
-                  ),
-                  itemCount: viewModel.types.length,
-                  itemBuilder: (context, index) {
-                    final type = viewModel.types[index];
-                    final isAttacker = viewModel.selectedAttackerId == type.id;
-                    final isDefender = viewModel.selectedDefenderIds.contains(
-                      type.id,
-                    );
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    // Calculate optimal columns for responsive design
+                    int crossAxisCount = 3;
+                    if (constraints.maxWidth > 1200) {
+                      crossAxisCount = 9; // Ultra-wide: 2 rows
+                    } else if (constraints.maxWidth > 900) {
+                      crossAxisCount = 6; // Desktop: 3 rows
+                    } else if (constraints.maxWidth > 600) {
+                      crossAxisCount = 6; // Tablet landscape: 3 rows
+                    } else if (constraints.maxWidth > 400) {
+                      crossAxisCount = 3; // Mobile/Tablet portrait: 6 rows
+                    } else {
+                      crossAxisCount = 2; // Small mobile: 9 rows
+                    }
 
-                    return TypeCard(
-                      type: type,
-                      isSelected: isAttacker || isDefender,
-                      selectionType: isAttacker
-                          ? 'attacker'
-                          : (isDefender ? 'defender' : null),
-                      onTap: () {
-                        viewModel.selectAttacker(type.id);
-                      },
-                      onLongPress: () {
-                        viewModel.toggleDefender(type.id);
+                    return GridView.builder(
+                      padding: const EdgeInsets.all(12),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: crossAxisCount,
+                        crossAxisSpacing: 8,
+                        mainAxisSpacing: 8,
+                        childAspectRatio: 1.0,
+                      ),
+                      itemCount: viewModel.types.length,
+                      itemBuilder: (context, index) {
+                        final type = viewModel.types[index];
+                        final isAttacker = viewModel.selectedAttackerId == type.id;
+                        final isDefender = viewModel.selectedDefenderIds.contains(
+                          type.id,
+                        );
+
+                        return TypeCard(
+                          type: type,
+                          isSelected: isAttacker || isDefender,
+                          selectionType: isAttacker
+                              ? 'attacker'
+                              : (isDefender ? 'defender' : null),
+                          onTap: () {
+                            viewModel.selectAttacker(type.id);
+                          },
+                          onLongPress: () {
+                            viewModel.toggleDefender(type.id);
+                          },
+                        );
                       },
                     );
                   },
@@ -93,7 +158,7 @@ class TypeChartScreen extends StatelessWidget {
         color: Theme.of(context).cardColor,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 8,
             offset: const Offset(0, -2),
           ),
@@ -115,7 +180,15 @@ class TypeChartScreen extends StatelessWidget {
                     const SizedBox(height: 4),
                     if (attackerType != null)
                       Chip(
-                        avatar: Text(attackerType.emoji),
+                        avatar: SvgPicture.asset(
+                          'data/images/${attackerType.id}.svg',
+                          width: 20,
+                          height: 20,
+                          colorFilter: const ColorFilter.mode(
+                            Colors.white,
+                            BlendMode.srcIn,
+                          ),
+                        ),
                         label: Text(attackerType.name),
                       )
                     else
@@ -137,7 +210,15 @@ class TypeChartScreen extends StatelessWidget {
                         spacing: 4,
                         children: defenderTypes.map((type) {
                           return Chip(
-                            avatar: Text(type!.emoji),
+                            avatar: SvgPicture.asset(
+                              'data/images/${type!.id}.svg',
+                              width: 20,
+                              height: 20,
+                              colorFilter: const ColorFilter.mode(
+                                Colors.white,
+                                BlendMode.srcIn,
+                              ),
+                            ),
                             label: Text(type.name),
                           );
                         }).toList(),
@@ -154,7 +235,7 @@ class TypeChartScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: _getMultiplierColor(multiplier).withOpacity(0.2),
+                color: _getMultiplierColor(multiplier).withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: _getMultiplierColor(multiplier)),
               ),
@@ -233,7 +314,15 @@ class TypeChartScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final type = viewModel.types[index];
                 return ListTile(
-                  leading: Text(type.emoji, style: const TextStyle(fontSize: 24)),
+                  leading: SvgPicture.asset(
+                    'data/images/${type.id}.svg',
+                    width: 32,
+                    height: 32,
+                    colorFilter: ColorFilter.mode(
+                      _hexToColor(type.colorHex),
+                      BlendMode.srcIn,
+                    ),
+                  ),
                   title: Text(type.name),
                   onTap: () {
                     viewModel.selectAttacker(type.id);
@@ -252,5 +341,16 @@ class TypeChartScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  Color _hexToColor(String hexString) {
+    try {
+      final buffer = StringBuffer();
+      if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+      buffer.write(hexString.replaceFirst('#', ''));
+      return Color(int.parse(buffer.toString(), radix: 16));
+    } catch (e) {
+      return Colors.grey;
+    }
   }
 }

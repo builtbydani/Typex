@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../core/models/pokemon_type.dart';
 
 class TypeCard extends StatelessWidget {
@@ -14,8 +15,8 @@ class TypeCard extends StatelessWidget {
     this.isSelected = false,
     this.selectionType,
     this.onLongPress,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +38,22 @@ class TypeCard extends StatelessWidget {
                 )
               : BorderSide.none,
         ),
-        color: color.withOpacity(0.8),
+        color: color.withValues(alpha: 0.8),
         child: Container(
           padding: const EdgeInsets.all(8),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(type.emoji, style: const TextStyle(fontSize: 32)),
+              // SVG Icon
+              SvgPicture.asset(
+                'data/images/${type.id}.svg',
+                width: 40,
+                height: 40,
+                colorFilter: const ColorFilter.mode(
+                  Colors.white,
+                  BlendMode.srcIn,
+                ),
+              ),
               const SizedBox(height: 4),
               Text(
                 type.name,

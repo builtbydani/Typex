@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../viewmodels/favorites_viewmodel.dart';
 import '../viewmodels/type_chart_viewmodel.dart';
+import 'type_details_screen.dart';
 
 class FavoritesScreen extends StatelessWidget {
-  const FavoritesScreen({Key? key}) : super(key: key);
+  const FavoritesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,12 @@ class FavoritesScreen extends StatelessWidget {
                     'No favorites yet',
                     style: TextStyle(fontSize: 18, color: Colors.grey),
                   ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Save defensive types from the details screen',
+                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                    textAlign: TextAlign.center,
+                  ),
                 ],
               ),
             );
@@ -37,32 +45,34 @@ class FavoritesScreen extends StatelessWidget {
             itemCount: favoritesVM.favorites.length,
             itemBuilder: (context, index) {
               final combo = favoritesVM.favorites[index];
-              final attackerType = typeChartVM.getTypeById(combo.attackerId);
               final defenderTypes = combo.defenderIds
                   .map((id) => typeChartVM.getTypeById(id))
                   .where((type) => type != null)
                   .toList();
 
+              if (defenderTypes.isEmpty) return const SizedBox.shrink();
+
+              final firstType = defenderTypes.first!;
+
               return Card(
                 margin: const EdgeInsets.only(bottom: 12),
                 child: ListTile(
-                  leading: attackerType != null
-                      ? Text(
-                          attackerType.emoji,
-                          style: const TextStyle(fontSize: 32),
-                        )
-                      : null,
-                  title: Text(combo.label ?? 'Favorite Combo'),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (attackerType != null)
-                        Text('Attacker: ${attackerType.name}'),
-                      if (defenderTypes.isNotEmpty)
-                        Text(
-                          'Defenders: ${defenderTypes.map((t) => t!.name).join(', ')}',
-                        ),
-                    ],
+                  leading: SvgPicture.asset(
+                    'data/images/${firstType.id}.svg',
+                    width: 40,
+                    height: 40,
+                    colorFilter: ColorFilter.mode(
+                      _hexToColor(firstType.colorHex),
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                  title: Text(
+                    defenderTypes.length == 1
+                        ? firstType.name
+                        : '${firstType.name} / ${defenderTypes[1]!.name}',
+                  ),
+                  subtitle: Text(
+                    combo.label ?? 'Tap to view defensive matchups',
                   ),
                   trailing: IconButton(
                     icon: const Icon(Icons.delete),
@@ -70,6 +80,16 @@ class FavoritesScreen extends StatelessWidget {
                       favoritesVM.removeFavorite(index);
                     },
                   ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TypeDetailsScreen(
+                          defenderIds: combo.defenderIds,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               );
             },
@@ -77,5 +97,16 @@ class FavoritesScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Color _hexToColor(String hexString) {
+    try {
+      final buffer = StringBuffer();
+      if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+      buffer.write(hexString.replaceFirst('#', ''));
+      return Color(int.parse(buffer.toString(), radix: 16));
+    } catch (e) {
+      return Colors.grey;
+    }
   }
 }

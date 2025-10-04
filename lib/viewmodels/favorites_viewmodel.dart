@@ -24,9 +24,7 @@ class FavoritesViewModel extends ChangeNotifier {
   Future<void> addFavorite(FavoriteCombo combo) async {
     // Check for duplicates, limit to 20
     if (favorites.any(
-      (fav) =>
-          fav.attackerId == combo.attackerId &&
-          listEquals(fav.defenderIds, combo.defenderIds),
+      (fav) => listEquals(fav.defenderIds, combo.defenderIds),
     )) {
       return; // Avoid duplicates
     } else if (favorites.length >= 20) {

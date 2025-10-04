@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../viewmodels/type_chart_viewmodel.dart';
 import '../viewmodels/favorites_viewmodel.dart';
 import '../core/models/favorite_combo.dart';
@@ -7,8 +8,7 @@ import '../core/models/favorite_combo.dart';
 class TypeDetailsScreen extends StatelessWidget {
   final List<String> defenderIds;
 
-  const TypeDetailsScreen({required this.defenderIds, Key? key})
-    : super(key: key);
+  const TypeDetailsScreen({required this.defenderIds, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +19,14 @@ class TypeDetailsScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.favorite_border),
             onPressed: () {
-              final viewModel = context.read<TypeChartViewModel>();
-              if (viewModel.selectedAttackerId != null) {
-                context.read<FavoritesViewModel>().addFavorite(
-                  FavoriteCombo(
-                    attackerId: viewModel.selectedAttackerId!,
-                    defenderIds: defenderIds,
-                  ),
-                );
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Added to favorites')),
-                );
-              }
+              context.read<FavoritesViewModel>().addFavorite(
+                FavoriteCombo(
+                  defenderIds: defenderIds,
+                ),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Added to favorites')),
+              );
             },
           ),
         ],
@@ -83,9 +79,14 @@ class TypeDetailsScreen extends StatelessWidget {
                         spacing: 8,
                         children: defenderTypes.map((type) {
                           return Chip(
-                            avatar: Text(
-                              type!.emoji,
-                              style: const TextStyle(fontSize: 20),
+                            avatar: SvgPicture.asset(
+                              'data/images/${type!.id}.svg',
+                              width: 24,
+                              height: 24,
+                              colorFilter: ColorFilter.mode(
+                                _hexToColor(type.colorHex),
+                                BlendMode.srcIn,
+                              ),
                             ),
                             label: Text(
                               type.name,
@@ -174,9 +175,17 @@ class TypeDetailsScreen extends StatelessWidget {
                 if (type == null) return const SizedBox.shrink();
 
                 return Chip(
-                  avatar: Text(type.emoji),
+                  avatar: SvgPicture.asset(
+                    'data/images/${type.id}.svg',
+                    width: 20,
+                    height: 20,
+                    colorFilter: ColorFilter.mode(
+                      color,
+                      BlendMode.srcIn,
+                    ),
+                  ),
                   label: Text(type.name),
-                  backgroundColor: color.withOpacity(0.1),
+                  backgroundColor: color.withValues(alpha: 0.1),
                 );
               }).toList(),
             ),
@@ -184,5 +193,16 @@ class TypeDetailsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color _hexToColor(String hexString) {
+    try {
+      final buffer = StringBuffer();
+      if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+      buffer.write(hexString.replaceFirst('#', ''));
+      return Color(int.parse(buffer.toString(), radix: 16));
+    } catch (e) {
+      return Colors.grey;
+    }
   }
 }

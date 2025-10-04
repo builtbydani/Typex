@@ -4,8 +4,7 @@ class MultiplierBadge extends StatelessWidget {
   final double multiplier;
   final double size;
 
-  const MultiplierBadge({required this.multiplier, this.size = 16, Key? key})
-    : super(key: key);
+  const MultiplierBadge({required this.multiplier, this.size = 16, super.key});
 
   @override
   Widget build(BuildContext context) {

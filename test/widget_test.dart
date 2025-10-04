@@ -10,13 +10,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:typex/main.dart';
 
 void main() {
-  testWidgets('Home screen shows app title', (WidgetTester tester) async {
+  testWidgets('App shows Pokémon Type Chart', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
 
-    // Verify that the home screen shows the app title
+    // Wait for the app to load
+    await tester.pump();
+
+    // Verify that the app shows the main title
     expect(find.text('Pokémon Type Chart'), findsOneWidget);
-    expect(find.text('Type Chart'), findsOneWidget);
-    expect(find.text('View Type Chart'), findsOneWidget);
   });
 }

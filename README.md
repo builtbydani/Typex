@@ -2,6 +2,12 @@
 A companion app for pokemon type matchups.
 Built with Flutter, written in Dart.
 
+## Built with
+- [Flutter](https://flutter.dev/)[https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white] - UI toolkit for building natively compiled applications
+- [Claude](https://claude.ai/)[https://img.shields.io/badge/Claude-D97757?style=for-the-badge&logo=claude&logoColor=white] - AI assistant for code generation and assistance
+- [NeoVim](https://neovim.io/)[https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white] - Text editor
+- [Dart](https://dart.dev/)[https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white] - Programming language
+
 ## Overview
 Typex is a mobile application designed to help Pokémon trainers understand type matchups and build effective teams
 for battles. It provides a comprehensive type chart, team builder, and analysis tools to optimize your team's strengths and weaknesses.

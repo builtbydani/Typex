@@ -1,12 +1,18 @@
 # typeX
-A companion app for pokemon type matchups.
+A companion app for Pokémon type matchups.
 Built with Flutter, written in Dart.
 
+[![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev/)
+[![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev/)
+[![Neovim](https://img.shields.io/badge/NeoVim-57A143?style=for-the-badge&logo=neovim&logoColor=white)](https://neovim.io/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](#license)
+
 ## Built with
-- [Flutter](https://flutter.dev/)[https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white] - UI toolkit for building natively compiled applications
-- [Claude](https://claude.ai/)[https://img.shields.io/badge/Claude-D97757?style=for-the-badge&logo=claude&logoColor=white] - AI assistant for code generation and assistance
-- [NeoVim](https://neovim.io/)[https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white] - Text editor
-- [Dart](https://dart.dev/)[https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white] - Programming language
+- [Flutter](https://flutter.dev/) — UI toolkit for building natively compiled applications.
+- [Dart](https://dart.dev/) — Programming language.
+- [NeoVim](https://neovim.io/) — Text editor.
+- [![Claude](https://img.shields.io/badge/Claude-D97757?style=for-the-badge)](https://claude.ai/) - AI assistant used for ideation/code help
+
 
 ## Overview
 Typex is a mobile application designed to help Pokémon trainers understand type matchups and build effective teams

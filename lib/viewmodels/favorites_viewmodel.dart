@@ -22,16 +22,31 @@ class FavoritesViewModel extends ChangeNotifier {
   }
 
   Future<void> addFavorite(FavoriteCombo combo) async {
-    // TODO: Implement add logic
+    // Check for duplicates, limit to 20
+    if (favorites.any(
+      (fav) =>
+          fav.attackerId == combo.attackerId &&
+          listEquals(fav.defenderIds, combo.defenderIds),
+    )) {
+      return; // Avoid duplicates
+    } else if (favorites.length >= 20) {
+      favorites.removeAt(0); // Remove oldest if at limit
+    }
+
+    // add to list and save
     favorites.add(combo);
     await _persistenceService.saveFavorites(favorites);
     notifyListeners();
   }
 
   Future<void> removeFavorite(int index) async {
-    // TODO: Implement remove logic
-    favorites.removeAt(index);
-    await _persistenceService.saveFavorites(favorites);
+    // remove from list and save, check bounds
+    if (index < 0 || index >= favorites.length)
+      return;
+    else {
+      favorites.removeAt(index);
+      await _persistenceService.saveFavorites(favorites);
+    }
     notifyListeners();
   }
 }
